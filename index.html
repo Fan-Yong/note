@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>资源传送门</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f2f2f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            width: 85%;
+            max-width: 400px;
+        }
+        h2 { margin-top: 0; margin-bottom: 20px; font-weight: 600; }
+        input {
+            font-size: 32px;
+            padding: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            border: 2px solid #e5e5ea;
+            border-radius: 12px;
+            text-align: center;
+            outline: none;
+            background: #f9f9f9;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        input:focus { border-color: #007aff; background: #fff; }
+        button {
+            font-size: 20px;
+            font-weight: 600;
+            padding: 16px 0;
+            width: 100%;
+            background-color: #007aff;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,122,255,0.3);
+            transition: transform 0.1s;
+        }
+        button:active { transform: scale(0.98); background-color: #0062cc; }
+        .footer { margin-top: 20px; font-size: 12px; color: #999; }
+        #error-msg { color: #ff3b30; margin-top: 15px; font-size: 14px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>请输入资源编号</h2>
+    <input type="tel" id="code-input" placeholder="" autofocus>
+    <button onclick="jump()">立即打开</button>
+    <p id="error-msg">⚠️ 未找到该编号对应的链接</p>
+    <div class="footer">链接将在新窗口打开</div>
+</div>
+
+<script>
+    // ==========================================
+    // ▼▼▼ 【配置区域】 ▼▼▼
+    // ==========================================
+    
+    const config = {
+        "1": "https://drive.google.com/file/d/1f8XhO1L51YsjxetwSTjHPZ3llKcVKGkc/view?usp=sharing",
+        "2": "https://drive.google.com/file/d/1bjyuotViTIjwBUX7AaldVpGGhMQXy6a0/view?usp=sharing",
+        "3": "https://drive.google.com/file/d/1zsfj2HNK48BAQ-ZBZyrYf-FcwPmahVSP/view?usp=sharing",
+        "101": "https://github.com"
+    };
+
+    // ==========================================
+    // ▲▲▲ 【配置结束】 ▲▲▲
+    // ==========================================
+
+    const input = document.getElementById('code-input');
+    const errorMsg = document.getElementById('error-msg');
+
+    input.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            jump();
+        }
+    });
+
+    function jump() {
+        const id = input.value.trim();
+        const url = config[id];
+
+        if (url) {
+            errorMsg.style.display = 'none';
+            
+            // ▼▼▼ 修改了这里 ▼▼▼
+            // '_blank' 表示在新标签页/新窗口打开
+            window.open(url, '_blank'); 
+            
+            // 可选：打开后清空输入框，方便下一次输入
+            // input.value = ''; 
+        } else {
+            errorMsg.style.display = 'block';
+            input.value = ''; 
+            input.focus();
+        }
+    }
+</script>
+
+</body>
+</html>
